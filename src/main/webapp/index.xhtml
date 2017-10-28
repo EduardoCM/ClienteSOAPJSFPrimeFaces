@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        Hello from Facelets
+        <br />
+        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        <p:growl id="msj" showDetail="true" />
+            <h:form id="frm">
+            <p:panelGrid columns="2" >
+                <p:outputLabel  value="Nombre" />
+                <p:inputText  value="#{personaBean.personaNueva.nombre}"  />
+                
+                <p:outputLabel   value="Apellido Paterno" />
+                <p:inputText  value="#{personaBean.personaNueva.apePaterno}" />
+                
+                <p:outputLabel   value="Apellido Materno" />
+                <p:inputText  value="#{personaBean.personaNueva.apeMaterno}" />
+                
+                <p:outputLabel   value="correo" />
+                <p:inputText  value="#{personaBean.personaNueva.email}" />
+            
+                <p:outputLabel   value="Telefono" />
+                <p:inputText  value="#{personaBean.personaNueva.telefono}" />
+            
+            
+                <p:commandButton value="Guardar" actionListener="#{personaBean.guardarPersona}" update=":msj" />
+                <p:commandButton value="Listar" actionListener="#{personaBean.listarPersona}" update="data"/>
+            </p:panelGrid>
+           
+            
+             
+            <p:dataTable id="data" value="#{personaBean.lstPersonas}" var="per">
+                
+                <p:column headerText="Nombre">
+                    <p:outputLabel value="#{per.nombre}" />
+                </p:column>
+                
+                <p:column headerText="Paterno">
+                    <p:outputLabel value="#{per.apePaterno}" />
+                </p:column>
+                
+                <p:column headerText="Materno">
+                    <p:outputLabel value="#{per.apeMaterno}" />
+                </p:column>
+                
+                <p:column headerText="Modificar">
+                    <p:commandLink value="Modificar" actionListener="#{personaBean.buscarId}" oncomplete="PF('wdlgDatos').show();" update=":dlgDatos" />
+                    
+                </p:column>
+               
+         
+            </p:dataTable>
+          
+        </h:form>
+            
+            
+            <p:dialog header="datos" widgetVar="wdlgDatos" id="dlgDatos">
+                <h:form>
+                <p:panelGrid columns="2" >
+                <p:outputLabel value="Nombre" />
+                <p:inputText value="#{personaBean.personaNueva.nombre}" />
+                
+                <p:outputLabel value="Paterno" />
+                <p:inputText value="#{personaBean.personaNueva.apePaterno}" />
+            
+            
+                <p:outputLabel value="Materno" />
+                <p:inputText value="#{personaBean.personaNueva.apeMaterno}" />
+            
+                <p:commandButton value="Modificar" actionListener="#{personaBean.actualizar()}" oncomplete="PF('wdlgDatos').hide();" update=":frm:data"   />
+            <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('wdlgDatos').hide();"/>
+            
+            </p:panelGrid>
+                    </h:form>
+            </p:dialog>
+           
+    </h:body>
+</html>
+
